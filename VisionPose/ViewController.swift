@@ -7,6 +7,7 @@
 
 import UIKit
 import Vision
+
 class ViewController: UIViewController {
 
     var imageSize = CGSize.zero
@@ -17,10 +18,17 @@ class ViewController: UIViewController {
     
     private var currentFrame: CGImage?
     
+    var isShowCalculateResult = false
+    @IBOutlet weak var resultPoints: UITextView!
+    @IBOutlet weak var finalPoints: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupAndBeginCapturingVideoFrames()
+        
+        resultPoints.isHidden = !isShowCalculateResult
+        finalPoints.isHidden = !isShowCalculateResult
     }
     
     private func setupAndBeginCapturingVideoFrames() {
@@ -94,22 +102,32 @@ class ViewController: UIViewController {
     
     func processObservation(_ observation: VNRecognizedPointsObservation) {
         
+        var resultPointsStr = "result:"
+        var finalPointsStr = "final:"
+        
         // Retrieve all torso points.
         guard let recognizedPoints =
                 try? observation.recognizedPoints(forGroupKey: VNRecognizedPointGroupKey.all) else {
             return
         }
         
-        
         let imagePoints: [CGPoint] = recognizedPoints.values.compactMap {
             guard $0.confidence > 0 else { return nil }
             
-            return VNImagePointForNormalizedPoint($0.location,
-                                                  Int(imageSize.width),
-                                                  Int(imageSize.height))
+            resultPointsStr = resultPointsStr + "\n(\(String(format: "%.6f", $0.location.x)),\(String(format: "%.6f", $0.location.y)))"
+            
+            let result = VNImagePointForNormalizedPoint($0.location,
+                                                        Int(imageSize.width),
+                                                        Int(imageSize.height))
+            finalPointsStr = finalPointsStr + "\n(\(String(format: "%.4f", result.x)),\(String(format: "%.4f", result.y)))"
+            return result
         }
         
 //        print("pose cnt \(imagePoints.count): \(imagePoints)")
+        DispatchQueue.main.async {
+            self.resultPoints.text = resultPointsStr
+            self.finalPoints.text = finalPointsStr
+        }
         
         let image = currentFrame?.drawPoints(points: imagePoints)
         DispatchQueue.main.async {
