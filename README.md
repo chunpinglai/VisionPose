@@ -8,9 +8,7 @@ Here is a demo project, use Viseion to detect body joints.
 Burpee in landspcape.
 ![Burpee in landspcape](./image/Burpee-landscape.gif)
 
-Instruction of training model for action classification (shoulder press / squat)
-![Instruction of training model for action classification](https://chunpinglai.medium.com/action-classification-4c2819f6b69)
-
+[Instruction of training model for action classification (shoulder press / squat)] (https://chunpinglai.medium.com/action-classification-4c2819f6b69)
 
 
 Recognize action - shoulder press / squat
