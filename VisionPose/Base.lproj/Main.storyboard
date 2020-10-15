@@ -44,6 +44,13 @@
                                     <action selector="onCameraButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eRI-Ic-0Ih"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltx-Mk-qGv">
+                                <rect key="frame" x="0.0" y="437.5" width="414" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -52,10 +59,14 @@
                             <constraint firstItem="xpy-5R-sW3" firstAttribute="top" secondItem="6Sf-md-J61" secondAttribute="top" id="7Jd-uB-ucC"/>
                             <constraint firstItem="dTy-yy-CWw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BLx-SS-W7W"/>
                             <constraint firstItem="xpy-5R-sW3" firstAttribute="width" secondItem="6Sf-md-J61" secondAttribute="width" id="CSL-V4-611"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ltx-Mk-qGv" secondAttribute="trailing" id="Fcn-0t-Ib1"/>
+                            <constraint firstItem="ltx-Mk-qGv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ffw-fO-lfE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="M7U-Re-AEj" secondAttribute="trailing" constant="20" id="Gxp-Mp-abu"/>
                             <constraint firstItem="xpy-5R-sW3" firstAttribute="bottom" secondItem="6Sf-md-J61" secondAttribute="bottom" id="H6a-9d-GPn"/>
+                            <constraint firstItem="ltx-Mk-qGv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="NlE-vS-xXa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6Sf-md-J61" secondAttribute="bottom" constant="10" id="RSy-7h-9hB"/>
                             <constraint firstItem="xpy-5R-sW3" firstAttribute="leading" secondItem="6Sf-md-J61" secondAttribute="trailing" constant="10" id="SeA-jT-CLu"/>
+                            <constraint firstItem="ltx-Mk-qGv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TDY-H8-70R"/>
                             <constraint firstItem="M7U-Re-AEj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="UOK-Mg-9jq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xpy-5R-sW3" secondAttribute="trailing" constant="10" id="WT4-30-dcu"/>
                             <constraint firstItem="dTy-yy-CWw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ler-fw-I2X"/>
@@ -65,6 +76,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actionLabel" destination="ltx-Mk-qGv" id="dfJ-AU-5KR"/>
                         <outlet property="finalPoints" destination="xpy-5R-sW3" id="UWt-Wg-9Zp"/>
                         <outlet property="previewImageView" destination="dTy-yy-CWw" id="IUe-qF-ac6"/>
                         <outlet property="resultPoints" destination="6Sf-md-J61" id="H8e-jW-QSJ"/>

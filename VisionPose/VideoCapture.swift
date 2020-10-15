@@ -12,6 +12,7 @@ import VideoToolbox
 
 protocol VideoCaptureDelegate: AnyObject {
     func videoCapture(_ videoCapture: VideoCapture, didCaptureFrame image: CGImage?)
+    func videoCaptureBuffer(_ videoCapture: VideoCapture, didCaptureBuffer buffer: CMSampleBuffer)
 }
 
 /// - Tag: VideoCapture
@@ -212,6 +213,7 @@ extension VideoCapture: AVCaptureVideoDataOutputSampleBufferDelegate {
 
             DispatchQueue.main.sync {
                 delegate.videoCapture(self, didCaptureFrame: image)
+                delegate.videoCaptureBuffer(self, didCaptureBuffer: sampleBuffer)
             }
         }
     }

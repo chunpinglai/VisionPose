@@ -22,6 +22,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var resultPoints: UITextView!
     @IBOutlet weak var finalPoints: UITextView!
     
+    @IBOutlet weak var actionLabel: UILabel!
+    let predictor = Predictor()
+    var poseObservations = [VNHumanBodyPoseObservation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,19 +33,6 @@ class ViewController: UIViewController {
         
         resultPoints.isHidden = !isShowCalculateResult
         finalPoints.isHidden = !isShowCalculateResult
-    }
-    
-    private func setupAndBeginCapturingVideoFrames() {
-        videoCapture.setUpAVCapture { error in
-            if let error = error {
-                print("Failed to setup camera with error \(error)")
-                return
-            }
-
-            self.videoCapture.delegate = self
-
-            self.videoCapture.startCapturing()
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,6 +47,19 @@ class ViewController: UIViewController {
         setupAndBeginCapturingVideoFrames()
     }
     
+    private func setupAndBeginCapturingVideoFrames() {
+        videoCapture.setUpAVCapture { error in
+            if let error = error {
+                print("Failed to setup camera with error \(error)")
+                return
+            }
+
+            self.videoCapture.delegate = self
+
+            self.videoCapture.startCapturing()
+        }
+    }
+    
     @IBAction func onCameraButtonTapped(_ sender: Any) {
         videoCapture.flipCamera { error in
             if let error = error {
@@ -64,7 +68,13 @@ class ViewController: UIViewController {
         }
     }
     
-
+    func storeObservation(_ observation: VNHumanBodyPoseObservation) {
+        if poseObservations.count >= 30 {
+            poseObservations.removeFirst()
+        }
+        poseObservations.append(observation)
+    }
+    
     func estimation(_ cgImage:CGImage) {
         imageSize = CGSize(width: cgImage.width, height: cgImage.height)
 
@@ -98,6 +108,10 @@ class ViewController: UIViewController {
             observations.forEach { processObservation($0) }
         }
         
+        if let result = observations.first {
+            storeObservation(result as! VNHumanBodyPoseObservation)
+            labelActionType()
+        }
     }
     
     func processObservation(_ observation: VNRecognizedPointsObservation) {
@@ -149,7 +163,78 @@ extension ViewController: VideoCaptureDelegate {
         }
 
         currentFrame = image
-        
+
         estimation(image)
+    }
+    
+    func labelActionType() {
+        guard let actionClassifier = try? EstimationModel(configuration: MLModelConfiguration()),
+              let poseMultiArray = prepareInputWithObservations(poseObservations),
+              let predictions = try? actionClassifier.prediction(poses: poseMultiArray) else {
+            return
+        }
+        let label = predictions.label
+        let confidence = predictions.labelProbabilities[label] ?? 0
+//        print(confidence, label)
+        let isOverThreshold = confidence > 0.5
+        DispatchQueue.main.async {
+            self.actionLabel.isHidden = !isOverThreshold
+            self.actionLabel.text = isOverThreshold ? label : ""
+        }
+    }
+    
+    func videoCaptureBuffer(_ videoCapture: VideoCapture, didCaptureBuffer buffer: CMSampleBuffer) {
+//        if let poseObservation = try? self.predictor.performBodyPoseRequest(buffer) {
+//            // Fetch body joints from the observation and overlay them on the player.
+////            let joints = getBodyJointsFor(observation: poseObservation)
+////            DispatchQueue.main.async {
+////                self.bodyView.joints = joints
+////            }
+//        }
+//
+//        guard let prediction = try? self.predictor.makePrediction() else {
+//            return
+//        }
+//
+//        let label = prediction.label
+//
+//        DispatchQueue.main.async {
+//            self.actionLabel.text = "\(label)"
+//        }
+    }
+    
+    func prepareInputWithObservations(_ observations: [VNHumanBodyPoseObservation]) -> MLMultiArray? {
+        let numAvailableFrames = observations.count
+        let observationsNeeded = 30
+        var multiArrayBuffer = [MLMultiArray]()
+
+        for frameIndex in 0 ..< min(numAvailableFrames, observationsNeeded) {
+            let pose = observations[frameIndex]
+            do {
+                let oneFrameMultiArray = try pose.keypointsMultiArray()
+                multiArrayBuffer.append(oneFrameMultiArray)
+            } catch {
+                continue
+            }
+        }
+        
+        // If poseWindow does not have enough frames (45) yet, we need to pad 0s
+        if numAvailableFrames < observationsNeeded {
+            for _ in 0 ..< (observationsNeeded - numAvailableFrames) {
+                do {
+                    let oneFrameMultiArray = try MLMultiArray(shape: [1, 3, 18], dataType: .double)
+                    try resetMultiArray(oneFrameMultiArray)
+                    multiArrayBuffer.append(oneFrameMultiArray)
+                } catch {
+                    continue
+                }
+            }
+        }
+        return MLMultiArray(concatenating: [MLMultiArray](multiArrayBuffer), axis: 0, dataType: .float)
+    }
+    
+    func resetMultiArray(_ predictionWindow: MLMultiArray, with value: Double = 0.0) throws {
+        let pointer = try UnsafeMutableBufferPointer<Double>(predictionWindow)
+        pointer.initialize(repeating: value)
     }
 }

@@ -18,6 +18,8 @@
 		50163ADE24A34B1D006C9708 /* VisionPoseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50163ADD24A34B1D006C9708 /* VisionPoseUITests.swift */; };
 		50705B3A24A4BFB600EA50B7 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50705B3924A4BFB600EA50B7 /* VideoCapture.swift */; };
 		50705B3C24A4BFCB00EA50B7 /* AVCaptureVideoOrientation+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50705B3B24A4BFCB00EA50B7 /* AVCaptureVideoOrientation+Extension.swift */; };
+		9ADBA8E32536F04600407BD9 /* Predictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADBA8E22536F04600407BD9 /* Predictor.swift */; };
+		9ADBA8F425382A5100407BD9 /* SquatShoulderPress.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 9ADBA8F325382A5100407BD9 /* SquatShoulderPress.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		50163ADF24A34B1D006C9708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50705B3924A4BFB600EA50B7 /* VideoCapture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
 		50705B3B24A4BFCB00EA50B7 /* AVCaptureVideoOrientation+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVCaptureVideoOrientation+Extension.swift"; sourceTree = "<group>"; };
+		9ADBA8E22536F04600407BD9 /* Predictor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Predictor.swift; sourceTree = "<group>"; };
+		9ADBA8F325382A5100407BD9 /* SquatShoulderPress.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SquatShoulderPress.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,12 +109,14 @@
 		50163ABA24A34B1C006C9708 /* VisionPose */ = {
 			isa = PBXGroup;
 			children = (
+				9ADBA8F325382A5100407BD9 /* SquatShoulderPress.mlmodel */,
 				50163ABB24A34B1C006C9708 /* AppDelegate.swift */,
 				50163ABD24A34B1C006C9708 /* SceneDelegate.swift */,
 				50163ABF24A34B1C006C9708 /* ViewController.swift */,
 				50705B3924A4BFB600EA50B7 /* VideoCapture.swift */,
 				50705B3B24A4BFCB00EA50B7 /* AVCaptureVideoOrientation+Extension.swift */,
 				500BB12D24A4CDAD00083FDF /* CGImage+DrawPoint.swift */,
+				9ADBA8E22536F04600407BD9 /* Predictor.swift */,
 				50163AC124A34B1C006C9708 /* Main.storyboard */,
 				50163AC424A34B1D006C9708 /* Assets.xcassets */,
 				50163AC624A34B1D006C9708 /* LaunchScreen.storyboard */,
@@ -272,6 +278,8 @@
 				50163ABC24A34B1C006C9708 /* AppDelegate.swift in Sources */,
 				50163ABE24A34B1C006C9708 /* SceneDelegate.swift in Sources */,
 				500BB12E24A4CDAD00083FDF /* CGImage+DrawPoint.swift in Sources */,
+				9ADBA8E32536F04600407BD9 /* Predictor.swift in Sources */,
+				9ADBA8F425382A5100407BD9 /* SquatShoulderPress.mlmodel in Sources */,
 				50705B3C24A4BFCB00EA50B7 /* AVCaptureVideoOrientation+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,13 +457,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KCUGBDU8HN;
+				DEVELOPMENT_TEAM = 6H6YJFF77T;
 				INFOPLIST_FILE = VisionPose/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.al03.VisionPose;
+				PRODUCT_BUNDLE_IDENTIFIER = abby.test.VisionPose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -468,13 +476,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KCUGBDU8HN;
+				DEVELOPMENT_TEAM = 6H6YJFF77T;
 				INFOPLIST_FILE = VisionPose/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.al03.VisionPose;
+				PRODUCT_BUNDLE_IDENTIFIER = abby.test.VisionPose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
